@@ -18,7 +18,7 @@ def all_match_details(request):
                     }
         match_list.append(m_detail)
 
-    print(match_list)
+    #print(match_list)
 
     return render_to_response("all_match_data.html",{"match_list" : match_list})
 

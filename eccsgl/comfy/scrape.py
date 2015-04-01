@@ -94,3 +94,6 @@ def full_cycle():
     match_details = scrape()
     for match in match_details:
         handle_match_info(match)
+
+if __name__ == "__main__":
+	full_cycle()

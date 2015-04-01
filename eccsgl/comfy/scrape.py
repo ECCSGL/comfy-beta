@@ -2,6 +2,7 @@
 import requests
 import lxml.html
 from comfy.models import Match, User, Team
+import datetime
 
 def scrape():
     return_matches = []
@@ -88,6 +89,7 @@ def handle_match_info(match_details):
                 print("Match ID = {}, match was closed.".format(match.id))
                 match.winner = Match.CLOSED
             match.run_bets()
+    match.last_updated = datetime.datetime.now()
     match.save()
 
 def full_cycle():

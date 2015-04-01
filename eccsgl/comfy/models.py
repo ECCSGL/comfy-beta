@@ -1,6 +1,7 @@
 from django.db import models
 import hashlib
 import time
+import datetime
 
 def sha256this(string):
     hash = hashlib.sha256()
@@ -22,6 +23,7 @@ class Match(models.Model):
     odds_1 = models.IntegerField(default=0)
     odds_2 = models.IntegerField(default=0)
     time = models.CharField(max_length=100)
+    last_updated = models.DateTimeField(default=datetime.datetime.now())
 
     OPEN = 1
     LIVE = 2

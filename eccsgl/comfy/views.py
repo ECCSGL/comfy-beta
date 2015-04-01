@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from comfy.models import Match, User, Team
 from django.shortcuts import render_to_response
+import datetime
 
 # Create your views here.
 def all_match_details(request):
-    matches = Match.objects.all().order_by("id").reverse()
+    matches = Match.objects.filter(last_updated__gte=datetime.datetime.now()-datetime.timedelta(hours=1)).order_by("id").reverse()
 
     match_list = []
 

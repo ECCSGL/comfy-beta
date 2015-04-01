@@ -16,10 +16,13 @@ def all_match_details(request):
                     "team_1_odds" : m.odds_1,
                     "team_2_odds" : m.odds_2,
                     "time" : m.time,
+		    "state" : m.state,
+		    "last_updated" : m.last_updated,
+		    "winner" : m.winner,
                     }
         match_list.append(m_detail)
 
-    #print(match_list)
+    print(match_list)
 
     return render_to_response("all_match_data.html",{"match_list" : match_list})
 

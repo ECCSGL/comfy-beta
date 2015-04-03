@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^all_matches',comfy.views.all_match_details)
+    url(r'^all_matches',comfy.views.all_match_details),
+    url(r'^match/(?P<match>[0-9]+)',comfy.views.one_match_details)
 )

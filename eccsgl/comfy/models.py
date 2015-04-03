@@ -1,17 +1,10 @@
 from django.db import models
-import hashlib
-import time
 import datetime
 
-def sha256this(string):
-    hash = hashlib.sha256()
-    hash.update(repr(string).encode("utf-8"))
-
-    return hash.hexdigest()
-
 class User(models.Model):
-    hash = models.CharField(max_length=256,default=sha256this(time.time()))
-    created = models.DateTimeField()
+    hash = models.CharField(primary_key=True,max_length=256)
+    created = models.DateTimeField(default=datetime.datetime.now())
+    balance = models.FloatField(default=100.00)
 
 class Team(models.Model):
     name = models.CharField(max_length=10)
@@ -78,6 +71,8 @@ class Bet(models.Model):
     team = models.IntegerField(default=0)
     amount = models.FloatField(default=0)
     output = models.FloatField(default=0)
+    date_made = models.DateTimeField(default=datetime.datetime.now())
+    user = models.ForeignKey(User,null=True)
 
     PENDING = 0
     WON = 1

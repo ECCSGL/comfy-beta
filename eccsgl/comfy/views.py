@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from comfy.models import Match, User, Team
+from comfy.models import Match, User, Team, Bet
 from django.shortcuts import render_to_response
 import datetime
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+import time
+import hashlib
 
 # Create your views here.
 def all_match_details(request):
@@ -23,6 +25,25 @@ def one_match_details(request,match):
 
     return render_to_response("one_match_detail.html",{"match_dict" : get_match_dict(m) })
 
+def account_incl_hash(request,hash):
+    user, user_exists = get_user_details(request, hash=hash)
+    if not user_exists:
+        return account_excl_hash(request)
+    bet_history = Bet.objects.filter(user=user).order_by("date_made")[:50]
+    print(bet_history)
+    response = render_to_response("account_page.html",{"account" : user, "bet_history" : bet_history})
+    response.set_cookie("hash",value=hash)
+    return response
+
+def account_excl_hash(request):
+    user, user_exists = get_user_details(request)
+    if user_exists:
+        return redirect("comfy.views.account_incl_hash",hash=user.hash)
+    user = User.objects.create(hash=sha256this(time.time()))
+    user.save()
+    return redirect("comfy.views.account_incl_hash",hash=user.hash)
+
+#Helper functions
 def get_match_dict(m):
     m_detail = {"match_id" : m.id,
                     "team_1_name" : m.team_1.name,
@@ -36,3 +57,20 @@ def get_match_dict(m):
                     }
 
     return m_detail
+
+def get_user_details(request, hash=None):
+    if hash is None and "hash" in request.COOKIES:
+        hash = request.COOKIES["hash"]
+    try:
+        user = User.objects.get(pk=hash)
+        user_exists = True
+    except User.DoesNotExist:
+        user = None
+        user_exists = False
+    return user, user_exists
+
+def sha256this(string):
+    hash = hashlib.sha256()
+    hash.update(repr(string).encode("utf-8"))
+
+    return hash.hexdigest()

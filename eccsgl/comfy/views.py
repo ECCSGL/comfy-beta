@@ -78,7 +78,7 @@ def place_bet(request):
     else:
         user.balance -= bet_dict["amount"]
 
-    bet = Bet.objects.create(user=user,match=bet_dict["match"],amount=bet_dict["amount"],team=bet_dict["amount"])
+    bet = Bet.objects.create(user=user,match=bet_dict["match"],amount=bet_dict["amount"],team=bet_dict["team"])
 
     bet.save()
 

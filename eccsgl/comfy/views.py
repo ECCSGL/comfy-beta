@@ -73,10 +73,16 @@ def place_bet(request):
         pass
 
     #Check funds
+    if bet_dict["amount"] > user.balance:
+        return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
+    else:
+        user.balance -= bet_dict["amount"]
 
     bet = Bet.objects.create(user=user,match=bet_dict["match"],amount=bet_dict["amount"],team=bet_dict["amount"])
 
     bet.save()
+
+    user.save()
 
     return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
 

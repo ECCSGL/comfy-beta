@@ -3,6 +3,7 @@ from comfy.models import Match, User, Team, Bet
 from django.shortcuts import render_to_response
 import datetime
 from django.shortcuts import get_object_or_404, redirect
+import django.http
 import time
 import hashlib
 
@@ -15,8 +16,6 @@ def all_match_details(request):
     for m in matches:
         m_detail = get_match_dict(m)
         match_list.append(m_detail)
-
-    print(match_list)
 
     return render_to_response("all_match_data.html",{"match_list" : match_list})
 
@@ -57,6 +56,30 @@ def account_excl_hash(request):
     user.save()
     return redirect("comfy.views.account_incl_hash",hash=user.hash)
 
+def place_bet(request):
+    user, user_exists = get_user_details(request)
+
+    bet_dict = bet_form_processing(request)
+
+    print(bet_dict)
+
+    if not user_exists or not bet_dict["valid"]:
+        raise django.http.Http404
+
+    try:
+        bet = Bet.objects.get(user=user,match=Match.objects.get(pk=bet_dict["m_id"]))
+        return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
+    except:
+        pass
+
+    #Check funds
+
+    bet = Bet.objects.create(user=user,match=bet_dict["match"],amount=bet_dict["amount"],team=bet_dict["amount"])
+
+    bet.save()
+
+    return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
+
 #Helper functions
 def get_match_dict(m):
     m_detail = {"match_id" : m.id,
@@ -88,3 +111,31 @@ def sha256this(string):
     hash.update(repr(string).encode("utf-8"))
 
     return hash.hexdigest()
+
+def bet_form_processing(request):
+    return_dict = {"valid" : False}
+    if request.method != "POST":
+        return return_dict
+    team = int(request.POST.get("team",None))
+    m_id = int(request.POST.get("match",None))
+    amount = float(request.POST.get("amount",None))
+    return_dict["team"] = team
+    return_dict["m_id"] = m_id
+    return_dict["amount"] = amount
+    if team is None or m_id is None or amount is None:
+        return return_dict
+
+    if team != 1 and team != 2:
+        return return_dict
+
+    try:
+        match = Match.objects.get(pk=m_id)
+        return_dict["match"] = match
+    except:
+        return return_dict
+
+    if amount < 0.04 or amount > 240:
+        return return_dict
+
+    return_dict["valid"] = True
+    return return_dict

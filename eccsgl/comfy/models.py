@@ -3,7 +3,7 @@ import datetime
 
 class User(models.Model):
     hash = models.CharField(primary_key=True,max_length=256)
-    created = models.DateTimeField(default=datetime.datetime.now())
+    created = models.DateTimeField(auto_now_add=True)
     balance = models.FloatField(default=100.00)
 
 class Team(models.Model):
@@ -16,7 +16,7 @@ class Match(models.Model):
     odds_1 = models.IntegerField(default=0)
     odds_2 = models.IntegerField(default=0)
     time = models.CharField(max_length=100)
-    last_updated = models.DateTimeField(default=datetime.datetime.now())
+    last_updated = models.DateTimeField(auto_now_add=True)
 
     OPEN = 1
     LIVE = 2
@@ -71,7 +71,7 @@ class Bet(models.Model):
     team = models.IntegerField(default=0)
     amount = models.FloatField(default=0)
     output = models.FloatField(default=0)
-    date_made = models.DateTimeField(default=datetime.datetime.now())
+    date_made = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User,null=True)
 
     PENDING = 0

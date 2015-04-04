@@ -1,7 +1,7 @@
 {% include "one_match_brief.html" %}
 
 <div class="betting_section" style="margin-top:20px;border-style:solid;border-width:5px;">
-    {% if True or bet_placed %}
+    {% if bet_placed %}
     <div class="your_bet">
         DISPLAYS YOUR BET
         {% if match_dict.state == 1 %}
@@ -11,7 +11,7 @@
         {% endif %}
     </div>
     {% endif %}
-{% if match_dict.state == 1 and True or not bet_placed %}
+{% if match_dict.state == 1 and not bet_placed %}
 <!-- if not bet_placed --> BETTING OPEN, BET HERE
 {% elif match_dict.state == 2 %}
 BETTING CLOSED

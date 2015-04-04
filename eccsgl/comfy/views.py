@@ -23,14 +23,28 @@ def all_match_details(request):
 def one_match_details(request,match):
     m = get_object_or_404(Match,pk=match)
 
-    return render_to_response("one_match_detail.html",{"match_dict" : get_match_dict(m) })
+    user, user_exists = get_user_details(request)
+
+    response_dict = {"match_dict" : get_match_dict(m) }
+
+    if user_exists:
+        try:
+            bet = Bet.objects.get(user=user,match=m)
+            bet_placed = True
+        except:
+            bet = None
+            bet_placed = False
+
+    response_dict["bet_placed"] = bet_placed
+    response_dict["bet"] = bet
+
+    return render_to_response("one_match_detail.html",response_dict)
 
 def account_incl_hash(request,hash):
     user, user_exists = get_user_details(request, hash=hash)
     if not user_exists:
         return account_excl_hash(request)
     bet_history = Bet.objects.filter(user=user).order_by("date_made")[:50]
-    print(bet_history)
     response = render_to_response("account_page.html",{"account" : user, "bet_history" : bet_history})
     response.set_cookie("hash",value=hash)
     return response

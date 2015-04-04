@@ -49,13 +49,13 @@ class Match(models.Model):
         bets = Bet.objects.filter(match=self)
         print("PROCESSING BETS FOR MATCH ID = {}".format(self.id))
         for bet in bets:
-            if self.CLOSED:
+            if self.winner == self.CLOSED:
                 bet.output = bet.amount
                 bet.status = bet.CLOSED
-            elif self.TEAM_1_WIN and bet.team == 1:
+            elif self.winner == self.TEAM_1_WIN and bet.team == 1:
                 bet.output = bet.amount + (bet.amount * (self.odds_2 / self.odds_1))
                 bet.status = bet.WIN
-            elif self.TEAM_2_WIN and bet.team == 2:
+            elif self.winner == self.TEAM_2_WIN and bet.team == 2:
                 bet.output = bet.amount + (bet.amount * (self.odds_1 / self.odds_2))
                 bet.status = bet.WIN
             else:

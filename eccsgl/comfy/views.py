@@ -67,13 +67,14 @@ def place_bet(request):
     if not user_exists or not bet_dict["valid"]:
         raise django.http.Http404
 
+    #Check if bets are still open
+
     try:
         bet = Bet.objects.get(user=user,match=Match.objects.get(pk=bet_dict["m_id"]))
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
     except:
         pass
 
-    #Check funds
     if bet_dict["amount"] > user.balance:
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
     else:
@@ -88,18 +89,20 @@ def place_bet(request):
     return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
 
 def switch_bet(request):
+    #needs to check if bets are still open
     user, user_exists = get_user_details(request)
 
     switch_dict = switch_form_processing(request)
+    print(switch_dict)
 
     if not user_exists or not switch_dict["valid"]:
         raise django.http.Http404
 
     try:
-        bet = Bet.objects.get(user=user,match=Match.objects.get(user=user,pk=switch_dict["m_id"]))
-        return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
+        bet = Bet.objects.get(user=user,match=Match.objects.get(pk=switch_dict["m_id"]))
     except:
-        pass
+        return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
+
 
     bet.team = switch_dict["team"]
     bet.save()

@@ -1,16 +1,24 @@
 {% include "one_match_brief.html" %}
 
-<div class="betting_section" style="margin-top:20px;border-style:solid;border-width:5px;">
+ <div class="betting_section" style="margin-top:20px;border-style:solid;border-width:5px;">
     {% if bet_placed %}
-    <div class="your_bet">
-        {% include "one_bet_short.html" %}
-        {% if match_dict.state == 1 %}
-            <div class="bet_swap">
+     <div class="your_bet">
+         {% include "one_bet_short.html" %}
+     </div>
+     {% endif %}
+     {% if match_dict.state == 1 %}
+         <div class="bet_swap">
             DISPLAY OFFER TO SWITCH
-            </div>
-        {% endif %}
-    </div>
-    {% endif %}
+                <form name="switch_form" action="/switchbet/" method="POST">
+                    <input type="radio" name="team" value=1 {% if bet.team == 1 %}checked{% endif %} >{{match_dict.team_1_name}}<br/>
+                    <input type="radio" name="team" value=2 {% if bet.team == 2 %}checked{% endif %}>{{match_dict.team_2_name}}<br/>
+                    <input type="hidden" name="match" value={{match_dict.match_id}}>
+                    <input type="Submit" name="Switch">
+                </form>
+             </div>
+     {% endif %}
+
+
 {% if match_dict.state == 1 and not bet_placed %}
     <form name="betting_form" action="/placebet/" method="POST">
         <input type="radio" name="team" value=1>{{match_dict.team_1_name}}<br/>

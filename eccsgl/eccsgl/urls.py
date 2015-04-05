@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^account/(?P<hash>[0-9a-zA-Z]+)',comfy.views.account_incl_hash),
     url(r'^account/',comfy.views.account_excl_hash),
     url(r'^placebet/',comfy.views.place_bet),
+    url(r'^switchbet/',comfy.views.switch_bet)
 )

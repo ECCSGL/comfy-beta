@@ -7,6 +7,15 @@ import django.http
 import time
 import hashlib
 
+ERRORS = {
+    "bets_closed" : "Sorry, you tried to bet on a game that's already closed.",
+    "invalid_amount" : "The amount you tried to bet is not one of our earth numbers.",
+    "amount_outofrange" : "The amount you tried to bet must be between $0.04 and $240. CSGL make the rules, not me.",
+    "not_enough_funds" : "The amount you tried to bet is more than you have, I'm afraid.",
+    "account_required" : "You just tried to do something that you can't do without an account.",
+    "switch_no_bet" : "You can't switch when you haven't bet already, you naughty false-POST-request-sending human."
+}
+
 # Create your views here.
 def all_match_details(request):
     matches = Match.objects.filter(last_updated__gte=datetime.datetime.now()-datetime.timedelta(hours=1)).order_by("state","id")
@@ -16,8 +25,14 @@ def all_match_details(request):
     for m in matches:
         m_detail = get_match_dict(m)
         match_list.append(m_detail)
+    response_dict = {"match_list" : match_list}
 
-    return render_to_response("all_match_data.html",{"match_list" : match_list})
+    user, user_exists = get_user_details(request)
+
+    response_dict["user"] = user
+    response_dict["user_exists"] = user_exists
+
+    return render_to_response("all_match_data.html",response_dict)
 
 def one_match_details(request,match):
     #toggle off bet features for those without logins
@@ -26,6 +41,9 @@ def one_match_details(request,match):
     user, user_exists = get_user_details(request)
 
     response_dict = {"match_dict" : get_match_dict(m) }
+
+    response_dict["user"] = user
+    response_dict["user_exists"] = user_exists
 
     if user_exists:
         try:
@@ -62,18 +80,20 @@ def place_bet(request):
 
     bet_dict = bet_form_processing(request)
 
-    print(bet_dict)
-
     if not user_exists or not bet_dict["valid"]:
-        raise django.http.Http404
+        return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
 
     #Check if bets are still open
-
+    match = Match.objects.get(pk=bet_dict["m_id"])
     try:
-        bet = Bet.objects.get(user=user,match=Match.objects.get(pk=bet_dict["m_id"]))
+        bet = Bet.objects.get(user=user,match=match)
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
     except:
         pass
+
+    if match.state != 1:
+        return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
+
 
     if bet_dict["amount"] > user.balance:
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
@@ -93,16 +113,20 @@ def switch_bet(request):
     user, user_exists = get_user_details(request)
 
     switch_dict = switch_form_processing(request)
-    print(switch_dict)
 
     if not user_exists or not switch_dict["valid"]:
-        raise django.http.Http404
+        return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
+
+
+    match = Match.objects.get(pk=switch_dict["m_id"])
 
     try:
-        bet = Bet.objects.get(user=user,match=Match.objects.get(pk=switch_dict["m_id"]))
+        bet = Bet.objects.get(user=user,match=match)
     except:
         return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
 
+    if match.state != 1:
+        return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
 
     bet.team = switch_dict["team"]
     bet.save()
@@ -113,23 +137,33 @@ def switch_bet(request):
 
 #Helper functions
 def switch_form_processing(request):
-    return_dict = {"valid" : False}
+    return_dict = {"valid" : False, "errors" : []}
     if request.method != "POST":
         return return_dict
-    team = int(request.POST.get("team",None))
-    m_id = int(request.POST.get("match",None))
-    return_dict["team"] = team
-    return_dict["m_id"] = m_id
+    try:
+        m_id = int(request.POST.get("match",0))
+        return_dict["m_id"] = m_id
+
+        team = int(request.POST.get("team",0))
+        return_dict["team"] = team
+
+    except:
+        return_dict["errors"].append("")
+        return return_dict
+
     if team is None or m_id is None:
+        return_dict["errors"].append("")
         return return_dict
 
     if team != 1 and team != 2:
+        return_dict["errors"].append("")
         return return_dict
 
     try:
         match = Match.objects.get(pk=m_id)
         return_dict["match"] = match
     except:
+        return_dict["errors"].append("")
         return return_dict
 
     return_dict["valid"] = True
@@ -167,28 +201,42 @@ def sha256this(string):
     return hash.hexdigest()
 
 def bet_form_processing(request):
-    return_dict = {"valid" : False}
+    return_dict = {"valid" : False, "errors" : []}
     if request.method != "POST":
         return return_dict
-    team = int(request.POST.get("team",None))
-    m_id = int(request.POST.get("match",None))
-    amount = float(request.POST.get("amount",None))
-    return_dict["team"] = team
-    return_dict["m_id"] = m_id
-    return_dict["amount"] = amount
+
+    try:
+        m_id = int(request.POST.get("match",0))
+        return_dict["m_id"] = m_id
+
+        team = int(request.POST.get("team",0))
+        return_dict["team"] = team
+
+
+        amount = float(request.POST.get("amount",0))
+        return_dict["amount"] = amount
+
+    except:
+        return_dict["errors"].append("")
+        return return_dict
+
     if team is None or m_id is None or amount is None:
+        return_dict["errors"].append("")
         return return_dict
 
     if team != 1 and team != 2:
+        return_dict["errors"].append("")
         return return_dict
 
     try:
         match = Match.objects.get(pk=m_id)
         return_dict["match"] = match
     except:
+        return_dict["errors"].append("")
         return return_dict
 
     if amount < 0.04 or amount > 240:
+        return_dict["errors"].append("")
         return return_dict
 
     return_dict["valid"] = True

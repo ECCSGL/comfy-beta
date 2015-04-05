@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+
+*.so
+
+.idea/*
+eccsgl/comfy/migrations/*
+
+eccsgl/db.sqlite3

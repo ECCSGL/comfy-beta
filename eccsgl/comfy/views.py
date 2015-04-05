@@ -20,6 +20,7 @@ def all_match_details(request):
     return render_to_response("all_match_data.html",{"match_list" : match_list})
 
 def one_match_details(request,match):
+    #toggle off bet features for those without logins
     m = get_object_or_404(Match,pk=match)
 
     user, user_exists = get_user_details(request)
@@ -34,8 +35,8 @@ def one_match_details(request,match):
             bet = None
             bet_placed = False
 
-    response_dict["bet_placed"] = bet_placed
-    response_dict["bet"] = bet
+        response_dict["bet_placed"] = bet_placed
+        response_dict["bet"] = bet
 
     return render_to_response("one_match_detail.html",response_dict)
 
@@ -86,7 +87,51 @@ def place_bet(request):
 
     return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
 
+def switch_bet(request):
+    user, user_exists = get_user_details(request)
+
+    switch_dict = switch_form_processing(request)
+
+    if not user_exists or not switch_dict["valid"]:
+        raise django.http.Http404
+
+    try:
+        bet = Bet.objects.get(user=user,match=Match.objects.get(user=user,pk=switch_dict["m_id"]))
+        return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
+    except:
+        pass
+
+    bet.team = switch_dict["team"]
+    bet.save()
+
+    user.save()
+
+    return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
+
 #Helper functions
+def switch_form_processing(request):
+    return_dict = {"valid" : False}
+    if request.method != "POST":
+        return return_dict
+    team = int(request.POST.get("team",None))
+    m_id = int(request.POST.get("match",None))
+    return_dict["team"] = team
+    return_dict["m_id"] = m_id
+    if team is None or m_id is None:
+        return return_dict
+
+    if team != 1 and team != 2:
+        return return_dict
+
+    try:
+        match = Match.objects.get(pk=m_id)
+        return_dict["match"] = match
+    except:
+        return return_dict
+
+    return_dict["valid"] = True
+    return return_dict
+
 def get_match_dict(m):
     m_detail = {"match_id" : m.id,
                     "team_1_name" : m.team_1.name,

@@ -5,10 +5,9 @@
      <div class="your_bet">
          {% include "one_bet_short.html" %}
      </div>
-     {% endif %}
      {% if match_dict.state == 1 %}
          <div class="bet_swap">
-            DISPLAY OFFER TO SWITCH
+            SWITCH TEAMS?
                 <form name="switch_form" action="/switchbet/" method="POST">
                     <input type="radio" name="team" value=1 {% if bet.team == 1 %}checked{% endif %} >{{match_dict.team_1_name}}<br/>
                     <input type="radio" name="team" value=2 {% if bet.team == 2 %}checked{% endif %}>{{match_dict.team_2_name}}<br/>
@@ -16,6 +15,7 @@
                     <input type="Submit" name="Switch">
                 </form>
              </div>
+     {% endif %}
      {% endif %}
 
 

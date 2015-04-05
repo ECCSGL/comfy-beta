@@ -63,9 +63,6 @@ class Match(models.Model):
             bet.save()
         self.state = self.PROCESSED
         self.save()
-	
-        user.balance += bet.output
-        user.save()
 
 
 

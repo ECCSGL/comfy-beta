@@ -4,6 +4,6 @@
     You bet ${{bet.amount}}.<br/>
     {% if bet.status == bet.PENDING %}Match not yet concluded.{% endif %}
     {% if bet.status == bet.LOST %} You lost {% endif %}
-    {% if bet.status == bet.WON %} You won. Payout: {{bet.output}} {% endif %}
-    {% if bet.status == bet.CLOSED %} Bet was closed, skins returned. Payout: {{bet.output}} {% endif %} <br/>
+    {% if bet.status == bet.WON %} You won. Profit: ${{bet.profit}} {% endif %}
+    {% if bet.status == bet.CLOSED %} Bet was closed, bets returned.{% endif %} <br/>
 </div>

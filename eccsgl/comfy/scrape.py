@@ -61,9 +61,8 @@ def scrape():
 def handle_match_info(match_details):
     match, match_is_new = Match.objects.get_or_create(pk=match_details["id"])
     print("Match {}, is new: {}".format(match.id,match_is_new))
-    if match_is_new:
-        match.team_1, team_1_is_new = Team.objects.get_or_create(name=match_details["team_1_name"])
-        match.team_2, team_2_is_new = Team.objects.get_or_create(name=match_details["team_2_name"])
+    match.team_1, team_1_is_new = Team.objects.get_or_create(name=match_details["team_1_name"])
+    match.team_2, team_2_is_new = Team.objects.get_or_create(name=match_details["team_2_name"])
 
     match.odds_1 = match_details["team_1_odds"]
     match.odds_2 = match_details["team_2_odds"]

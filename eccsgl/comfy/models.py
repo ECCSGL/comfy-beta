@@ -53,16 +53,19 @@ class Match(models.Model):
                 bet.output = bet.amount
                 bet.status = bet.CLOSED
             elif self.winner == self.TEAM_1_WIN and bet.team == 1:
-                bet.output = bet.amount + (bet.amount * (self.odds_2 / self.odds_1))
-                bet.status = bet.WIN
+                bet.output = bet.amount + (bet.amount * (float(self.odds_2) / float(self.odds_1)))
+                bet.status = bet.WON
             elif self.winner == self.TEAM_2_WIN and bet.team == 2:
-                bet.output = bet.amount + (bet.amount * (self.odds_1 / self.odds_2))
-                bet.status = bet.WIN
+                bet.output = bet.amount + (bet.amount * (float(self.odds_1) / float(self.odds_2)))
+                bet.status = bet.WON
             else:
                 bet.status = bet.LOST
             bet.save()
         self.state = self.PROCESSED
         self.save()
+	
+        user.balance += bet.output
+        user.save()
 
 
 
@@ -86,3 +89,7 @@ class Bet(models.Model):
     )
 
     status = models.IntegerField(default=0,choices=BET_STATUSES)
+
+    def _profit(self):
+        return self.output - self.amount
+    profit = property(_profit)

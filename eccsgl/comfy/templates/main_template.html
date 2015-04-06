@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+</head><meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% include "eccsgl_header.html" %}
+
+<div id="main_page_area" style="width:100%;overflow:auto;display:table;table-layout:fixed;border-style:solid;border_width:2px;position:relative;">
+    <div id="main_content" style="word-wrap:break-word;display:table-cell;width:65%;border-style:solid;border-width:2px;padding:5px;">
+        {% block eccsgl_main_content %}{% endblock %}
+    </div>
+    <div id="sidebar_content" style="word-wrap:break-word;display:table-cell;width:35%;height:100%;border-style:solid;border-width:2px;padding:5px;">
+        {% block eccsgl_sidebar %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>

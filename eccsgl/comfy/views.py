@@ -32,7 +32,7 @@ def all_match_details(request):
     response_dict["user"] = user
     response_dict["user_exists"] = user_exists
 
-    return render_to_response("all_match_data.html",response_dict)
+    return render_to_response("slash_all_matches.html",response_dict)
 
 def one_match_details(request,match):
     #toggle off bet features for those without logins
@@ -56,14 +56,14 @@ def one_match_details(request,match):
         response_dict["bet_placed"] = bet_placed
         response_dict["bet"] = bet
 
-    return render_to_response("one_match_detail.html",response_dict)
+    return render_to_response("slash_match.html",response_dict)
 
 def account_incl_hash(request,hash):
     user, user_exists = get_user_details(request, hash=hash)
     if not user_exists:
         return account_excl_hash(request)
     bet_history = Bet.objects.filter(user=user).order_by("date_made")[:50]
-    response = render_to_response("account_page.html",{"account" : user, "bet_history" : bet_history})
+    response = render_to_response("slash_account.html",{"account" : user, "bet_history" : bet_history})
     response.set_cookie("hash",value=hash)
     return response
 

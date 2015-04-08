@@ -6,6 +6,10 @@ class User(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     balance = models.FloatField(default=100.00)
 
+    def _shorthash(self):
+        return self.hash[0:8]
+    shorthash = property(_shorthash)
+
 class Team(models.Model):
     name = models.CharField(max_length=10)
 

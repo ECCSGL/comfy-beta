@@ -31,8 +31,10 @@ def all_match_details(request):
 
     user, user_exists = get_user_details(request)
 
-    response_dict["user"] = user
-    response_dict["user_exists"] = user_exists
+    response_dict["account"] = user
+    response_dict["account_exists"] = user_exists
+
+    print(response_dict)
 
     context = RequestContext(request, response_dict)
     return render_to_response("slash_all_matches.html",context)
@@ -45,8 +47,8 @@ def one_match_details(request,match):
 
     response_dict = {"match_dict" : get_match_dict(m) }
 
-    response_dict["user"] = user
-    response_dict["user_exists"] = user_exists
+    response_dict["account"] = user
+    response_dict["account_exists"] = user_exists
 
     if user_exists:
         try:
@@ -59,6 +61,7 @@ def one_match_details(request,match):
         response_dict["bet_placed"] = bet_placed
         response_dict["bet"] = bet
 
+
     context = RequestContext(request, response_dict)
     return render_to_response("slash_match.html",context)
 
@@ -68,7 +71,7 @@ def account_incl_hash(request,hash):
         return account_excl_hash(request)
     bet_history = Bet.objects.filter(user=user).order_by("date_made")[:50]
 
-    response_dict = {"account" : user, "bet_history" : bet_history}
+    response_dict = {"account" : user, "bet_history" : bet_history, "account_exists" : user_exists}
 
     context = RequestContext(request, response_dict)
     response = render_to_response("slash_account.html",context)

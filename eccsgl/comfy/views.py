@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, redirect
 import django.http
 import time
 import hashlib
+from django.contrib import messages
+from django.template import RequestContext
 
 ERRORS = {
     "bets_closed" : "Sorry, you tried to bet on a game that's already closed.",
@@ -32,7 +34,8 @@ def all_match_details(request):
     response_dict["user"] = user
     response_dict["user_exists"] = user_exists
 
-    return render_to_response("slash_all_matches.html",response_dict)
+    context = RequestContext(request, response_dict)
+    return render_to_response("slash_all_matches.html",context)
 
 def one_match_details(request,match):
     #toggle off bet features for those without logins
@@ -56,14 +59,19 @@ def one_match_details(request,match):
         response_dict["bet_placed"] = bet_placed
         response_dict["bet"] = bet
 
-    return render_to_response("slash_match.html",response_dict)
+    context = RequestContext(request, response_dict)
+    return render_to_response("slash_match.html",context)
 
 def account_incl_hash(request,hash):
     user, user_exists = get_user_details(request, hash=hash)
     if not user_exists:
         return account_excl_hash(request)
     bet_history = Bet.objects.filter(user=user).order_by("date_made")[:50]
-    response = render_to_response("slash_account.html",{"account" : user, "bet_history" : bet_history})
+
+    response_dict = {"account" : user, "bet_history" : bet_history}
+
+    context = RequestContext(request, response_dict)
+    response = render_to_response("slash_account.html",context)
     response.set_cookie("hash",value=hash)
     return response
 
@@ -80,22 +88,30 @@ def place_bet(request):
 
     bet_dict = bet_form_processing(request)
 
-    if not user_exists or not bet_dict["valid"]:
+    if not user_exists:
+        messages.add_message(request,messages.ERROR,"account_required")
+        return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
+
+    if not bet_dict["valid"]:
+        messages.add_message(request,messages.ERROR,"invalid_betform")
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
 
     #Check if bets are still open
     match = Match.objects.get(pk=bet_dict["m_id"])
     try:
         bet = Bet.objects.get(user=user,match=match)
+        messages.add_message(request,messages.ERROR,"already_bet")
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
     except:
         pass
 
     if match.state != 1:
+        messages.add_message(request,messages.ERROR,"betting_closed")
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
 
 
     if bet_dict["amount"] > user.balance:
+        messages.add_message(request,messages.ERROR,"not_enough_funds")
         return redirect("comfy.views.one_match_details",match=bet_dict["m_id"])
     else:
         user.balance -= bet_dict["amount"]
@@ -114,7 +130,12 @@ def switch_bet(request):
 
     switch_dict = switch_form_processing(request)
 
-    if not user_exists or not switch_dict["valid"]:
+    if not user_exists:
+        messages.add_message(request,messages.ERROR,"account_required")
+        return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
+
+    if not switch_dict["valid"]:
+        messages.add_message(request,messages.ERROR,"invalid_switchform")
         return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
 
 
@@ -123,9 +144,11 @@ def switch_bet(request):
     try:
         bet = Bet.objects.get(user=user,match=match)
     except:
+        messages.add_message(request,messages.ERROR,"bet_notfound")
         return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
 
     if match.state != 1:
+        messages.add_message(request,messages.ERROR,"betting_closed")
         return redirect("comfy.views.one_match_details",match=switch_dict["m_id"])
 
     bet.team = switch_dict["team"]

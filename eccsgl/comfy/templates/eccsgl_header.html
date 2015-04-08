@@ -9,7 +9,7 @@
     </div>
     <div id="side_header">
         {% if account_exists %}
-            Welcome {{account.shorthash}}, your balance is ${{account.balance}}.
+            Welcome {{account.shorthash}}, your balance is ${{account.balance | floatformat:2}}.
         {% else %}
             Click <a href="/account/">here</a> to get an account.
         {% endif %}

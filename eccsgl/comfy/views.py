@@ -34,8 +34,6 @@ def all_match_details(request):
     response_dict["account"] = user
     response_dict["account_exists"] = user_exists
 
-    print(response_dict)
-
     context = RequestContext(request, response_dict)
     return render_to_response("slash_all_matches.html",context)
 

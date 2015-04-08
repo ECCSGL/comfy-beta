@@ -43,6 +43,13 @@ def faq(request):
     context = RequestContext(request,response_dict)
     return render_to_response("slash_faq.html",context)
 
+def decookie(request):
+    context = RequestContext(request)
+    response = redirect("comfy.views.all_match_details",context)
+    response.delete_cookie("hash")
+    return response
+
+
 def one_match_details(request,match):
     #toggle off bet features for those without logins
     m = get_object_or_404(Match,pk=match)

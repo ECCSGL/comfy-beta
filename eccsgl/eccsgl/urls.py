@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^account/',comfy.views.account_excl_hash),
     url(r'^placebet/',comfy.views.place_bet),
     url(r'^faq/',comfy.views.faq),
+    url(r'^decookie/',comfy.views.decookie),
     url(r'^switchbet/',comfy.views.switch_bet)) + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

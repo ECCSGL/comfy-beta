@@ -3,21 +3,29 @@
         <div id="eccsgl_title">
             Extra Comfy CSGL
         </div>
+        <div id="navbar_container">
         <div id="navbar">
-            <a href="/all_matches">
-                Match listings
-            </a>
-            <a href="/account/">
-                Account page
-            </a>
-            <a href="/faq/">
-                FAQ (dead link)
-            </a>
+            <div class="navbar_item">
+                <a href="/all_matches">
+                    Match listings
+                </a>
+            </div>
+            <div class="navbar_item">
+                <a href="/account/">
+                    Account page
+                </a>
+            </div>
+            <div class="navbar_item">
+                <a href="/faq/">
+                    FAQ
+                </a>
+            </div>
         </div>
+            </div>
     </div>
     <div id="side_header">
         {% if account_exists %}
-            Welcome {{account.shorthash}} <br/> Your balance is ${{account.balance | floatformat:2}}.
+            Welcome <a href="/account/{{account.hash}}">{{account.shorthash}}</a> <br/> Your balance is ${{account.balance | floatformat:2}}.
         {% else %}
             Click <a href="/account/">here</a> to get an account.<br/> No sign-up required.
         {% endif %}

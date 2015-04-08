@@ -7,6 +7,6 @@
     {% if bet.status == bet.PENDING %} Expected payoff: ${{bet.expected_payoff | floatformat:2}}<br/> {% endif %}
     {% if bet.status == bet.PENDING %}Match not yet concluded.{% endif %}
     {% if bet.status == bet.LOST %} You lost {% endif %}
-    {% if bet.status == bet.WON %} You won. Profit: ${{bet.profit}} {% endif %}
+    {% if bet.status == bet.WON %} You won. Profit: ${{bet.profit | floatformat:2}} {% endif %}
     {% if bet.status == bet.CLOSED %} Bet was closed, bets returned.{% endif %} <br/>
 </div>

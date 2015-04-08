@@ -1,19 +1,21 @@
 <div class="account_title">
-    <h2>Welcome {{account.shorthash}}</h2>
-    <h3>Bookmark this page.</h3>
-    <h3>(No really, bookmark this page. This is your username.)</h3>
+    <span class="eccsgl_title">Welcome {{account.shorthash}}</span>
+
+    <span class="eccsgl_subtitle">Bookmark this page. (See the sidebar for an explaination).</span>
+
+    <span class="eccsgl_subtitle"><a href="/decookie/">Click here</a> to log out. Remember you can log back in at any point by visiting this page, as long as you have it bookmarked.</span>
 </div>
 
 <div>
-    <h3>
+    <span class="eccsgl_subtitle">
         Account balance: ${{account.balance | floatformat:2}}
-    </h3>
+    </span>
 </div>
 
 <div>
-    <h3>
+    <span class="eccsgl_subtitle">
         Last 50 bets
-    </h3>
+    </span>
     {% for bet in bet_history %}
         {% include "one_bet_short.html" %}
     {% endfor %}

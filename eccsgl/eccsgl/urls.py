@@ -11,6 +11,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^all_matches',comfy.views.all_match_details),
+    url(r'^$',comfy.views.all_match_details),
     url(r'^match/(?P<match>[0-9]+)',comfy.views.one_match_details),
     url(r'^account/(?P<hash>[0-9a-zA-Z]+)',comfy.views.account_incl_hash),
     url(r'^account/',comfy.views.account_excl_hash),

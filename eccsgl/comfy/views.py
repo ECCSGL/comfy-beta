@@ -72,7 +72,7 @@ def account_incl_hash(request,hash):
 
     context = RequestContext(request, response_dict)
     response = render_to_response("slash_account.html",context)
-    response.set_cookie("hash",value=hash)
+    response.set_cookie("hash",value=hash,max_age=28 * 24 * 60 * 60)
     return response
 
 def account_excl_hash(request):

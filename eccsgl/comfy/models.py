@@ -63,8 +63,11 @@ class Match(models.Model):
                 bet.output = bet.amount + (bet.amount * (float(self.odds_1) / float(self.odds_2)))
                 bet.status = bet.WON
             else:
+                bet.output = 0
                 bet.status = bet.LOST
             bet.save()
+            bet.user.balance += bet.output
+            bet.user.save()
         self.state = self.PROCESSED
         self.save()
 

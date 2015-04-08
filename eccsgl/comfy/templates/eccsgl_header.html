@@ -17,7 +17,7 @@
     </div>
     <div id="side_header">
         {% if account_exists %}
-            Welcome {{account.shorthash}} <br/> your balance is ${{account.balance | floatformat:2}}.
+            Welcome {{account.shorthash}} <br/> Your balance is ${{account.balance | floatformat:2}}.
         {% else %}
             Click <a href="/account/">here</a> to get an account.<br/> No sign-up required.
         {% endif %}

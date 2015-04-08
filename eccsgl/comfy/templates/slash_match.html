@@ -5,5 +5,64 @@
 {% endblock %}
 
 {% block eccsgl_sidebar %}
-    One match sidebar
+    <span class="sidebar_question">This page displays all the details for one match</span>
+
+    <span class="sidebar_question">I want to bet, what do I do?</span>
+
+    <span class="sidebar_answer">
+        Research. Try and calculate what you think the odds of the match are.
+    </span>
+
+    <span class="sidebar_question">How/where do I research?</span>
+
+    <span class="sidebar_answer">
+        <ul>
+            <li><a href="www.hltv.org">HLTV.org</a> - Find the match page for this match on HLTV. It'll tell you the format, map/s (if already decided) and give you information about both teams' recent performances</li>
+            <li><a href="www.reddit.com/r/csgobetting">/r/csgobetting on reddit</a> - Find the match thread for this game. Other people's comments (especially the raw data people/bots post) may give you an idea of which way the match is going.</a></li>
+        </ul>
+    </span>
+
+    <span class="sidebar_question">I worked out what I think the odds are, what do I do now?</span>
+
+    <span class="sidebar_answer">
+        Is your estimation of the odds the same as the odds here? If so, you probably want to skip betting on this game. <br/>
+        Otherwise, you probably want to bet on the team who you think are undervalued. That is, if the odds are 70-30, and you think the odds should be 60-40, you want to bet on the underdog.
+    </span>
+
+    <span class="sidebar_question">
+        How much do I bet?
+    </span>
+
+    <span class="sidebar_answer">
+        That's up to you, really. Generally speaking you want to bet less on underdogs than overdogs. <br/>
+        If you think the odds are really messed up in your favour (If a match that's 90-10 on CSGL that you think is 50-50, for instance), then you might want to place a larger amount. <br/>
+        Don't go all in, or even close to it. The key to profiting off CSGO betting is betting consistently - consistently make a profit in small amounts over time, and your inventory will grow. <br/>
+        Of course, you're not betting anything real on this website, but still. Play it like you were for the best results. <br/>
+        Oh, also. You can't bet less than $0.04, or more than $240. It's how CSGL works.
+    </span>
+
+    <span class="sidebar_question">How much will I win if I win?</span>
+
+    <span class="sidebar_answer">
+        Divide the percentage odds for the opposing team by the percentage odds for your team. You'll be paid that amount if your team wins. (So, betting on the underdog in a 60-40 game will get you 60/40 = 1.5 in payoff. <br/>
+        Plus your bet is returned if you win. <br/>
+    </span>
+
+    <span class="sidebar_question">Can I cancel/swap my bet?</span>
+
+    <span class="sidebar_answer">
+        Swap teams, yes. Cancel no. <br/>
+        This is how CSGL does it, and so shall we.
+    </span>
+
+    <span class="sidebar_question">
+        Does ECCSGL do overpay/underpay?
+    </span>
+
+    <span class="sidebar_answer">
+        Overpay no, underpay yes. <br/>
+        For those not aware of CSGL's idiosyncracies - because on CSGL you bet items and not credits or money, there's some curiousities with how payouts happen. <br/>
+        For those betting the max amount ($240), they often find that they get more than they would expect. <br/>
+        Similarly, those expecting small payoffs (generally below $1) may find they get a very limited amount or nothing. ECCSGL mimics this, crudely. To not fall foul to this, make sure you bet more than cents on overdogs.
+    </span>
 {% endblock %}

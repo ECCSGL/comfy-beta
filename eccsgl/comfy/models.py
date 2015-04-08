@@ -94,3 +94,11 @@ class Bet(models.Model):
     def _profit(self):
         return self.output - self.amount
     profit = property(_profit)
+
+    def _expected_payoff(self):
+        if self.team == 1:
+            ratio = (1.0 * self.match.odds_2 / self.match.odds_1)
+        else:
+            ratio = (1.0 * self.match.odds_1 / self.match.odds_2)
+        return ratio * self.amount
+    expected_payoff = property(_expected_payoff)

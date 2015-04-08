@@ -32,3 +32,15 @@ word-wrap:break-word;display:table-cell;width:65%;border-style:solid;border-widt
 #sidebar_content {
 word-wrap:break-word;display:table-cell;width:35%;border-style:solid;border-width:2px;padding:5px;
 }
+
+/* Sidebar questions + answers */
+.sidebar_question {
+font-weight:bold;
+display:block;
+padding-bottom:5px;
+}
+
+.sidebar_answer {
+display:block;
+padding-bottom:25px;
+}

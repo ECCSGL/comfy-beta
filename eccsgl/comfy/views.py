@@ -37,6 +37,12 @@ def all_match_details(request):
     context = RequestContext(request, response_dict)
     return render_to_response("slash_all_matches.html",context)
 
+def faq(request):
+    user, user_exists = get_user_details(request)
+    response_dict = {"account" : user, "account_exists" : user_exists}
+    context = RequestContext(request,response_dict)
+    return render_to_response("slash_faq.html",context)
+
 def one_match_details(request,match):
     #toggle off bet features for those without logins
     m = get_object_or_404(Match,pk=match)

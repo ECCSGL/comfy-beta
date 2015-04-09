@@ -45,7 +45,7 @@ def faq(request):
 
 def decookie(request):
     context = RequestContext(request)
-    response = redirect("comfy.views.all_match_details",context)
+    response = redirect("comfy.views.all_match_details")
     response.delete_cookie("hash")
     return response
 

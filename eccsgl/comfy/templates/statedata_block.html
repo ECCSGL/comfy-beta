@@ -1,5 +1,25 @@
-<div class="statedata">
+<div id="statedata">
 {% for m in messages %}
-    {{ m }} <br/>
-{% endfor %}
+    <div class="state_message">
+    {% if m.message == "bets_closed" %}
+        Sorry, you tried to bet on a game that's already closed.
+    {% elif m.message == "invalid_amount" %}
+        The amount you tried to bet is not one of our earth numbers.
+    {% elif m.message == "amount_outofrange" %}
+        The amount you tried to bet must be between $0.04 and $240. CSGL make the rules, not me.
+    {% elif m.message == "not_enough_funds" %}
+        The amount you tried to bet is more than you have, I'm afraid.
+    {% elif m.message == "account_required" %}
+        You just tried to do something that you can't do without an account.
+    {% elif m.message == "switch_no_bet" %}
+        You can't switch when you haven't bet already, you naughty false-POST-request-sending human
+    {% elif m.message == "invalid_betform" %}
+        Something was wrong with your bet.
+    {% elif m.message == "" %}
+        BLANK STATE MESSAGE
+    {% else %}
+    UNRECOGNISED STATE MESSAGE: "{{ m }}" <br/>
+    {% endif %}
     </div>
+{% endfor %}
+</div>

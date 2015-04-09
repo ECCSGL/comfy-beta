@@ -77,3 +77,14 @@ display:block;
 padding-bottom:10px;
 font-size: large;
 }
+
+/* State handling messages */
+#statedata {
+border-style:solid; /* For illustrative purposes - will be removed */
+border-width:2px; /* For illustrative purposes - will be removed */
+padding-bottom:10px;
+}
+
+.state_message {
+color:red;
+}

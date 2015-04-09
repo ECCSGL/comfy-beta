@@ -14,48 +14,51 @@ def scrape():
     matches = html.find_class("matchmain")
 
     for match in matches:
-        available = True
-        if match.find_class("notavailable"):
-            available = False
+        try:
+            available = True
+            if match.find_class("notavailable"):
+                available = False
 
-        matchleft = match.find_class("matchleft")[0]
-        team_div = matchleft.find_class("team")
-        teams = matchleft.find_class("teamtext")
-        links = matchleft.iterlinks()
-        for l in links:
-            id = l[2].strip("match?m=")
-            break
+            matchleft = match.find_class("matchleft")[0]
+            team_div = matchleft.find_class("team")
+            teams = matchleft.find_class("teamtext")
+            links = matchleft.iterlinks()
+            for l in links:
+                id = l[2].strip("match?m=")
+                break
 
-        team_1_name = teams[0][0].text_content()
-        team_1_odds = teams[0][2].text_content().strip("%")
-        team_1_won = len(team_div[0]) > 0
+            team_1_name = teams[0][0].text_content()
+            team_1_odds = teams[0][2].text_content().strip("%")
+            team_1_won = len(team_div[0]) > 0
 
-        team_2_name = teams[1][0].text_content()
-        team_2_odds = teams[1][2].text_content().strip("%")
-        team_2_won = len(team_div[1]) > 0
+            team_2_name = teams[1][0].text_content()
+            team_2_odds = teams[1][2].text_content().strip("%")
+            team_2_won = len(team_div[1]) > 0
 
-        when = match.find_class("whenm")[0].text_content().strip('Â\xa0Â\xa0\r\n').strip('Â\xa0Â\xa0a')
-        live = False
+            when = match.find_class("whenm")[0].text_content().strip('Â\xa0Â\xa0\r\n').strip('Â\xa0Â\xa0a')
+            live = False
 
-        if "LIVE" in when:
-            live = True
+            if "LIVE" in when:
+                live = True
 
-        event = match.find_class("eventm")[0].text_content()
+            event = match.find_class("eventm")[0].text_content()
 
-        match_details = {
-            "available" : available,
-            "id" : id,
-            "team_1_name" : team_1_name,
-            "team_1_odds" : team_1_odds,
-            "team_1_won" : team_1_won,
-            "team_2_name" : team_2_name,
-            "team_2_odds" : team_2_odds,
-            "team_2_won" : team_2_won,
-            "when" : when,
-            "live" : live,
-            "event" : event,
-        }
-        return_matches.append(match_details)
+            match_details = {
+                "available" : available,
+                "id" : id,
+                "team_1_name" : team_1_name,
+                "team_1_odds" : team_1_odds,
+                "team_1_won" : team_1_won,
+                "team_2_name" : team_2_name,
+                "team_2_odds" : team_2_odds,
+                "team_2_won" : team_2_won,
+                "when" : when,
+                "live" : live,
+                "event" : event,
+            }
+            return_matches.append(match_details)
+        except:
+            print("Match format weird. Trying next one.")
     return return_matches
 
 def handle_match_info(match_details):

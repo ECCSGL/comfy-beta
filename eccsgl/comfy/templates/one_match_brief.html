@@ -1,25 +1,26 @@
-<div class="match" style="width:100%;padding-bottom:30px;border-style:solid;border-width:2px;">
-    <br/>
-    <div class="match_details" style="margin:10px;">
-    Match id = <a href="/match/{{match_dict.match_id}}">{{match_dict.match_id}}</a> <br/>
-    Time = {{match_dict.time}} <br/> 
-    {% if match_dict.state == 2 %} MATCH LIVE <br/> {% endif %}
-    Betting {% if match_dict.state == 1%} Open {% else %} Closed {% endif %} <br/>
-    {% if match_dict.winner == 3 %} Game was closed (bets returned) <br/> {% endif %}
+<div class="match_link_container">
+<a href="/match/{{match_dict.match_id}}">
+<div class="match">
+    <div class="match_details">
+    <span class="eccsgl_subtitle">{{match_dict.time}} </span>
+    <span class="eccsgl_subtitle">{% if match_dict.state == 2 %}MATCH LIVE {% else %} {% endif %}</span>
+    <span class="eccsgl_subtitle">Betting {% if match_dict.state == 1%} Open {% else %} Closed {% endif %} </span>
+    <span class="eccsgl_subtitle">{% if match_dict.winner == 3 %}Game was closed (bets returned) {% else %} {% endif %}</span>
     </div>
     <div class="team_matchup">
-            <div class="teamtext" style="width:35%; float:left;margin-left:10%;">
-                {{match_dict.team_1_name}} <br/>
-                {{match_dict.team_1_odds}} <br/>
-                {% if match_dict.winner == 1 %} WINNER {% else %} - {% endif %} <br/>
+            <div class="teamtext teamtextleft {% if match_dict.winner == 1 %} gamewinner {% elif match_dict.winner == 3 %} gameclosed {% endif %}">
+                <span class="teamdetail">{{match_dict.team_1_name}}</span>
+                <span class="teamdetail">{{match_dict.team_1_odds}}</span>
+                <span class="teamdetail">{% if match_dict.winner == 1 %} WINNER {% elif match_dict.winner == 3 %} CLOSED {% else %} &nbsp; {% endif %}</span>
             </div>
-            <div class="teamtext" style="width:35%; float:right; margin-right:10%;">
-                {{match_dict.team_2_name}} <br/>
-                {{match_dict.team_2_odds}} <br/>
-                {% if match_dict.winner == 2 %} WINNER {% else %} - {% endif %} <br/>
+            <div class="teamtext teamtextright {% if match_dict.winner == 2 %} gamewinner {% elif match_dict.winner == 3 %} gameclosed {% endif %}" style="width:35%; float:right; margin-right:10%;">
+                <span class="teamdetail">{{match_dict.team_2_name}}</span>
+                <span class="teamdetail">{{match_dict.team_2_odds}}</span>
+                <span class="teamdetail">{% if match_dict.winner == 2 %} WINNER {% elif match_dict.winner == 3 %} CLOSED {% else %} &nbsp; {% endif %}</span>
             </div>
     </div>
     <br/>
     <br/>
-
+</div>
+</a>
 </div>

@@ -88,3 +88,55 @@ padding-bottom:10px;
 .state_message {
 color:red;
 }
+
+/* match CSS */
+.match {
+padding:10px;
+padding-bottom:40px;
+margin:15px;
+border-style:solid;
+border-width:2px
+}
+
+.match_link_container A:link {text-decoration: none;color:initial;}
+.match_link_container A:visited {text-decoration: none;color:initial;}
+.match_link_container A:active {text-decoration: none; color:initial;}
+.match_link_container A:hover {text-decoration:none; color:initial;}
+
+.teamtext {
+width:35%;
+text-align:center;
+}
+
+.match_details {
+text-align:center;
+}
+
+.teamtextleft {
+float:left;margin-left:10%;
+}
+
+.teamtextright {
+float:right;margin-right:10%;
+}
+
+.teamdetail {
+display:block;
+}
+
+.gamewinner {
+background-color:green;
+}
+
+.gameclosed {
+background-color:grey;
+}
+
+/* Bet stuff */
+.single_bet_short {
+margin:10px;border-style:solid;border-width:2px;padding:10px;
+}
+
+.betting_section {
+margin-top:20px;border-style:solid;border-width:5px;
+}

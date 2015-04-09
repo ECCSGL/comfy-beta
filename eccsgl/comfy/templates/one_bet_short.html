@@ -1,6 +1,6 @@
-<div class="single_bet_short" style="margin:10px;border-style:solid;border-width:2px;padding:10px;">
-    <a href="/match/{{bet.match.pk}}">Match {{bet.match.pk}}</a><br/>
-    {{bet.match.team_1.name}} {% if bet.team == 1 %}(your bet){% endif %} V/S {{bet.match.team_2.name}} {%if bet.team == 2 %}(your bet){% endif %}<br/>
+<div class="single_bet_short">
+    <span class="eccsgl_title"><a href="/match/{{bet.match.pk}}">Match {{bet.match.pk}}</a></span>
+    <span class="eccsgl_subtitle">{{bet.match.team_1.name}} {% if bet.team == 1 %}(your bet){% endif %} V/S {{bet.match.team_2.name}} {%if bet.team == 2 %}(your bet){% endif %}</span>
 
     You bet ${{bet.amount | floatformat:2}}.<br/>
 

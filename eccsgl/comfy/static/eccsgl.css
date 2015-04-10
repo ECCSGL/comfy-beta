@@ -3,7 +3,7 @@ body {
 margin:0px;
 margin-left:7.5%;
 margin-right:7.5%;
-background-color:#3366cc;
+background-color:#5577cc;
 
 }
 #eccsgl_header {
@@ -12,7 +12,7 @@ width:100%;display:table;
 
 #main_header {
 width:80%;display:inline-block;border-right:2px solid black; display:table-cell;
-background-color:blue;
+background-color:#3333FF;
 }
 
 #eccsgl_title {
@@ -52,7 +52,7 @@ text-align:center;
 
 #side_header {
 width:20%;display:table-cell;padding-left:10px;
-background-color:blue;
+background-color:#3333FF;
 text-align:center;
 vertical-align:middle;
 border-bottom:2px solid black;

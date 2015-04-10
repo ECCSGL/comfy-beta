@@ -1,28 +1,32 @@
 /*Header stuff */
+body {
+margin:0px;
+}
 #eccsgl_header {
-width:100%;height:100px;border-style:solid;border-width:2px;display:table;
+width:100%;display:table;
 }
 
 #main_header {
-width:80%;display:inline-block;border-style:solid;border-width:2px;padding:5px;display:table-cell;
+width:80%;display:inline-block;border-right:2px solid black; display:table-cell;
+background-color:#3366cc;
 }
 
 #eccsgl_title {
-border-style:solid;border-width:2px;padding:5px;width:90%;
+padding:5px;width:90%;
 font-size:xx-large;
 font-weight:bold;
+padding-left:25px;
 }
 
 #navbar-container {
 display:table-cell;
-width:90%;
 }
 
 #navbar {
-border-style:solid;border-width:2px;display:table;width:100%;
+border-style:solid;border-width:2px;border-left:0px solid black;border-right:0px solid black;display:table;width:100%;
 }
 
-.navbar_item {
+.navbar_wrapper {
 display:table-cell;
 border-width:1px;
 border-style:solid;
@@ -32,22 +36,38 @@ vertical-align:middle;
 text-align:center;
 }
 
+.navbar_item {
+
+}
+
+.navbar_wrapper A:link {text-decoration: none;color:initial;}
+.navbar_wrapper A:visited {text-decoration: none;color:initial;}
+.navbar_wrapper A:active {text-decoration: none; color:initial;}
+.navbar_wrapper A:hover {text-decoration:none; color:initial;}
+
+
 #side_header {
-width:20%;display:table-cell;border-style:solid;border-width:2px;padding:5px;
+width:20%;display:table-cell;padding-left:10px;
+background-color:#B6C1D6;
+text-align:center;
+vertical-align:middle;
+border-bottom:2px solid black;
 }
 
 /* main template stuff */
 
 #main_page_area {
-width:100%;overflow:auto;display:table;table-layout:fixed;border-style:solid;border_width:2px;position:relative;
+width:100%;overflow:auto;display:table;table-layout:fixed;position:relative;
 }
 
 #main_content {
-word-wrap:break-word;display:table-cell;width:65%;border-style:solid;border-width:2px;padding:5px;
+word-wrap:break-word;display:table-cell;width:65%;padding:10px;
+background-color:white;
 }
 
 #sidebar_content {
-word-wrap:break-word;display:table-cell;width:35%;border-style:solid;border-width:2px;padding:5px;
+word-wrap:break-word;display:table-cell;width:35%;border-left:2px solid black;padding:5px;
+background-color:#3399FF;
 }
 
 /* Sidebar questions + answers */
@@ -80,8 +100,6 @@ font-size: large;
 
 /* State handling messages */
 #statedata {
-border-style:solid; /* For illustrative purposes - will be removed */
-border-width:2px; /* For illustrative purposes - will be removed */
 padding-bottom:10px;
 }
 
@@ -92,7 +110,7 @@ color:red;
 /* match CSS */
 .match {
 padding:10px;
-padding-bottom:40px;
+padding-bottom:20px;
 margin:15px;
 border-style:solid;
 border-width:2px

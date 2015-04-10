@@ -10,12 +10,12 @@
     <div class="team_matchup">
             <div class="teamtext teamtextleft {% if match_dict.winner == 1 %} gamewinner {% elif match_dict.winner == 3 %} gameclosed {% endif %}">
                 <span class="teamdetail">{{match_dict.team_1_name}}</span>
-                <span class="teamdetail">{{match_dict.team_1_odds}}</span>
+                <span class="teamdetail">{{match_dict.team_1_odds}}%</span>
                 <span class="teamdetail">{% if match_dict.winner == 1 %} WINNER {% elif match_dict.winner == 3 %} CLOSED {% else %} &nbsp; {% endif %}</span>
             </div>
             <div class="teamtext teamtextright {% if match_dict.winner == 2 %} gamewinner {% elif match_dict.winner == 3 %} gameclosed {% endif %}" style="width:35%; float:right; margin-right:10%;">
                 <span class="teamdetail">{{match_dict.team_2_name}}</span>
-                <span class="teamdetail">{{match_dict.team_2_odds}}</span>
+                <span class="teamdetail">{{match_dict.team_2_odds}}%</span>
                 <span class="teamdetail">{% if match_dict.winner == 2 %} WINNER {% elif match_dict.winner == 3 %} CLOSED {% else %} &nbsp; {% endif %}</span>
             </div>
     </div>

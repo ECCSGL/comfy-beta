@@ -1,6 +1,6 @@
 <div class="match_link_container">
 <a href="/match/{{match_dict.match_id}}">
-<div class="match">
+<div class="match {% if match_dict.state == 1 %} matchopen {% else %} matchclosed {% endif %}">
     <div class="match_details">
     <span class="eccsgl_subtitle">{{match_dict.time}} </span>
     <span class="eccsgl_subtitle">{% if match_dict.state == 2 %}MATCH LIVE {% else %} {% endif %}</span>

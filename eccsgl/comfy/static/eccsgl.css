@@ -1,6 +1,10 @@
 /*Header stuff */
 body {
 margin:0px;
+margin-left:7.5%;
+margin-right:7.5%;
+background-color:#3366cc;
+
 }
 #eccsgl_header {
 width:100%;display:table;
@@ -8,7 +12,7 @@ width:100%;display:table;
 
 #main_header {
 width:80%;display:inline-block;border-right:2px solid black; display:table-cell;
-background-color:#3366cc;
+background-color:blue;
 }
 
 #eccsgl_title {
@@ -48,7 +52,7 @@ text-align:center;
 
 #side_header {
 width:20%;display:table-cell;padding-left:10px;
-background-color:#B6C1D6;
+background-color:blue;
 text-align:center;
 vertical-align:middle;
 border-bottom:2px solid black;
@@ -58,16 +62,15 @@ border-bottom:2px solid black;
 
 #main_page_area {
 width:100%;overflow:auto;display:table;table-layout:fixed;position:relative;
+background-color:white;
 }
 
 #main_content {
 word-wrap:break-word;display:table-cell;width:65%;padding:10px;
-background-color:white;
 }
 
 #sidebar_content {
-word-wrap:break-word;display:table-cell;width:35%;border-left:2px solid black;padding:5px;
-background-color:#3399FF;
+word-wrap:break-word;display:table-cell;width:35%;padding:25px;
 }
 
 /* Sidebar questions + answers */
@@ -113,7 +116,8 @@ padding:10px;
 padding-bottom:20px;
 margin:15px;
 border-style:solid;
-border-width:2px
+border-width:1px;
+border-radius:25px;
 }
 
 .match_link_container A:link {text-decoration: none;color:initial;}
@@ -128,6 +132,14 @@ text-align:center;
 
 .match_details {
 text-align:center;
+}
+
+.matchopen {
+background-color: #80FFBB;
+}
+
+.matchclosed {
+background-color: #E0E8EF;
 }
 
 .teamtextleft {
@@ -152,9 +164,9 @@ background-color:grey;
 
 /* Bet stuff */
 .single_bet_short {
-margin:10px;border-style:solid;border-width:2px;padding:10px;
+margin:10px;padding:10px;
 }
 
 .betting_section {
-margin-top:20px;border-style:solid;border-width:5px;
+margin-top:20px;
 }

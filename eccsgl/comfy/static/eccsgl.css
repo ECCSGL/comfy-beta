@@ -3,7 +3,7 @@ body {
 margin:0px;
 margin-left:7.5%;
 margin-right:7.5%;
-background-color:#5577cc;
+background-color:#6677cc;
 
 }
 #eccsgl_header {
@@ -12,7 +12,7 @@ width:100%;display:table;
 
 #main_header {
 width:80%;display:inline-block;border-right:2px solid black; display:table-cell;
-background-color:#3333FF;
+background-color:#5555FF;
 }
 
 #eccsgl_title {
@@ -21,6 +21,11 @@ font-size:xx-large;
 font-weight:bold;
 padding-left:25px;
 }
+
+#eccsgl_title A:link {text-decoration: none;color:initial;}
+#eccsgl_title A:visited {text-decoration: none;color:initial;}
+#eccsgl_title A:active {text-decoration: none; color:initial;}
+#eccsgl_title A:hover {text-decoration:none; color:initial;}
 
 #navbar-container {
 display:table-cell;
@@ -52,7 +57,7 @@ text-align:center;
 
 #side_header {
 width:20%;display:table-cell;padding-left:10px;
-background-color:#3333FF;
+background-color:#5555FF;
 text-align:center;
 vertical-align:middle;
 border-bottom:2px solid black;

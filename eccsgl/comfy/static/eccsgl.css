@@ -3,7 +3,7 @@ body {
 margin:0px;
 margin-left:7.5%;
 margin-right:7.5%;
-background-color:#6677cc;
+background-color:#516BE8;
 
 }
 #eccsgl_header {
@@ -12,7 +12,7 @@ width:100%;display:table;
 
 #main_header {
 width:80%;display:inline-block;border-right:2px solid black; display:table-cell;
-background-color:#5555FF;
+background-color:#A1A7FF;
 }
 
 #eccsgl_title {
@@ -57,7 +57,7 @@ text-align:center;
 
 #side_header {
 width:20%;display:table-cell;padding-left:10px;
-background-color:#5555FF;
+background-color:#A1A7FF;
 text-align:center;
 vertical-align:middle;
 border-bottom:2px solid black;
@@ -104,6 +104,12 @@ font-size: larger;
 display:block;
 padding-bottom:10px;
 font-size: large;
+font-weight: bold;
+}
+
+.eccsgl_bodytext {
+display:block;
+padding-bottom:20px;
 }
 
 /* State handling messages */
@@ -140,11 +146,11 @@ text-align:center;
 }
 
 .matchopen {
-background-color: #80FFBB;
+background-color: #6691FF;
 }
 
 .matchclosed {
-background-color: #E0E8EF;
+background-color: #C7E3FF;
 }
 
 .teamtextleft {
@@ -160,16 +166,18 @@ display:block;
 }
 
 .gamewinner {
-background-color:green;
+/*background-color:green;*/
 }
 
 .gameclosed {
-background-color:grey;
+/*background-color:grey;*/
 }
 
 /* Bet stuff */
 .single_bet_short {
 margin:10px;padding:10px;
+border-style:solid;
+border-width:1px;
 }
 
 .betting_section {

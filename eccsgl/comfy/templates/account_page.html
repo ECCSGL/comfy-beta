@@ -6,17 +6,21 @@
     <span class="eccsgl_subtitle"><a href="/decookie/">Click here</a> to log out. Remember you can log back in at any point by visiting this page, as long as you have it bookmarked.</span>
 </div>
 
-<div>
     <span class="eccsgl_subtitle">
         Account balance: ${{account.balance | floatformat:2}}
     </span>
-</div>
 
 <div>
     <span class="eccsgl_subtitle">
         Last 50 bets
     </span>
+    {% if bet_history %}
     {% for bet in bet_history %}
         {% include "one_bet_short.html" %}
     {% endfor %}
+    {% else %}
+    <span class="eccsgl_bodytext">
+        If you had placed any bets, they'd be here.
+    </span>
+    {% endif %}
 </div>
